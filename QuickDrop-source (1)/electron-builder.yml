@@ -1,0 +1,33 @@
+appId: com.quickdrop.app
+productName: QuickDrop
+directories:
+  output: release
+  buildResources: assets
+files:
+  - apps/desktop/dist/**/*
+  - apps/desktop/dist-electron/**/*
+  - "!**/*.map"
+extraResources:
+  # The local backend server, bundled so a double-clicked QuickDrop-Setup.exe
+  # is self-contained. See README "Packaging the server" for the native
+  # module rebuild step this requires (better-sqlite3).
+  - from: apps/server/dist
+    to: server
+  - from: apps/server/node_modules
+    to: server/node_modules
+  - from: apps/server/package.json
+    to: server/package.json
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+  icon: assets/icon.ico
+  artifactName: QuickDrop-Setup.exe
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: QuickDrop
